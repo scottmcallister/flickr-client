@@ -54,7 +54,8 @@ class SearchPage extends Component{
 		this.state = {results: ds, sort: 'relevance'};
 	}
 	_searchFlickr(searchTerm){
-		var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3a84419781bb3f1a1505be834333bf48&text='+encodeURI(searchTerm)+'&per_page=10&format=json&sort='+this.state.sort;
+		console.log(this.state.sort);
+		var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3a84419781bb3f1a1505be834333bf48&text='+encodeURI(searchTerm)+'&per_page=30&format=json&sort='+this.state.sort;
 		fetch(url,{method: 'GET', headers:{'Accept': 'application/json', 'Content-Type': 'application/json'}})
 			.then((response) => response._bodyInit)
 			.then((responseBody) => {
@@ -62,17 +63,11 @@ class SearchPage extends Component{
 				var photos = responseJSON.photos.photo;
 				var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 				var dataSource =  ds.cloneWithRows(photos);
-				this.setState({results: dataSource});
-				console.log(this.state.results);
+				this.setState({results: dataSource, sort: this.state.sort});
 			})
 			.catch((error) => {
 				console.warn(error);
 			});
-	}
-	renderImage(image){
-		return (
-			<Image source={{ uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>
-		);
 	}
 	render(){
 		return (
@@ -81,18 +76,24 @@ class SearchPage extends Component{
 					<TextInput
 						style={Styles.inputText}
 						placeholder={'Search flickr for images...'}
-						//onChangeText={(text) => this.setState({text})}
-    					//value={this.state.text}
     					returnKeyType='search'
 						onSubmitEditing={(text) => this._searchFlickr(text.nativeEvent.text)}
 					/>
-					<TouchableOpacity>
-						<Image style={{width:40,height:40}} source={require('./img/search-icon.png')}/>
-					</TouchableOpacity>
 				</View>
+
+				<ListView
+					dataSource={this.state.results}
+					renderRow={(image) => 
+						<View style={Styles.row}>
+							<Image style={Styles.thumb} source={{uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>
+						</View>
+					}
+					contentContainerStyle={Styles.list}
+				/>
 				<PickerIOS
 					selectedValue={this.state.order}
-					onValueChange={(newOrder) => this.setState({results: this.state.results, order: newOrder})}>
+					onValueChange={(newOrder) => this.setState({results: this.state.results, order: newOrder})}
+					style={{backgroundColor:'#EAF8FD', borderTopColor: '#05A5D1', borderTopWidth: 2}}>
 					{Object.keys(SORT_OPTIONS).map((sortOption) => (
 						<PickerItemIOS
 							key={sortOption}
@@ -101,11 +102,6 @@ class SearchPage extends Component{
 						/>
 					))}
 				</PickerIOS>
-				<ListView
-					dataSource={this.state.results}
-					renderRow={(image) => <Image style={{width:50,height:50}} source={{uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>}
-					style={{paddingTop: 100,backgroundColor: '#F5FCFF'}}
-				/>
 			</View>
 		);		
 	}

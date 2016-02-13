@@ -13,7 +13,8 @@ var Styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   header:{
-    backgroundColor:'#81c04d',
+    backgroundColor:'#3b3738',
+    padding:20,
     paddingTop:30,
     paddingBottom:10,
     flexDirection:'row' 
@@ -27,7 +28,29 @@ var Styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     borderColor: 'gray', 
-    borderWidth: 1
+    borderWidth: 1,
+    paddingLeft:20
+  },
+  list: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  row: {
+    justifyContent: 'center',
+    margin: 10,
+    width: 100,
+    height: 100,
+    backgroundColor: '#F6F6F6',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#CCC'
+  },
+  thumb: {
+    width: 100,
+    height: 100,
+    borderRadius:5
   }
 });
 
