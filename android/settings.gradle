@@ -1,0 +1,3 @@
+rootProject.name = 'FlickrClient'
+
+include ':app'
