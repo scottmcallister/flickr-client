@@ -22,8 +22,11 @@ class ImagePage extends Component{
 		this.state = {
 			username: '',
 			views: '',
-			date: ''
+			date: '',
+			loading: true
 		};
+	}
+	componentDidMount(){
 		this._fetchData();
 	}
 
@@ -38,14 +41,17 @@ class ImagePage extends Component{
 				var responseJSON = JSON.parse(responseBody.substring(14,responseBody.length-1));
 				var info = responseJSON.photo;
 				var date = info.dates.taken;
-				console.log(info.dates.taken);
 				var day = date.substring(8,10);
+				if(day.charAt(0) == '0'){
+					day = date.substring(9,10);
+				}
 				var monthIndex = date.substring(5,7);
 				var year = date.substring(0,4);
 				this.setState({
 					username: info.owner.username,
 					views: info.views,
-					date: day + ' ' + monthNames[parseInt(monthIndex)-1] + ' ' + year
+					date: day + ' ' + monthNames[parseInt(monthIndex)-1] + ' ' + year,
+					loading: false
 				});
 			})
 			.catch((error) => {
@@ -59,6 +65,22 @@ class ImagePage extends Component{
 
 	render(){
 		var image = this.props.image;
+		if(this.state.loading){
+			var info = 	<View style={Styles.textContainer}>
+						<Text style={Styles.info}>Loading info...</Text>
+						</View>;
+
+		}
+		else{
+			var info = 	<View style={Styles.textContainer}>
+							<Text style={Styles.infoHeading}>Owner</Text>
+							<Text style={Styles.info}>{this.state.username}</Text>
+							<Text style={Styles.infoHeading}>Views</Text>
+							<Text style={Styles.info}>{this.state.views}</Text>
+							<Text style={Styles.infoHeading}>Taken On</Text>
+							<Text style={Styles.info}>{this.state.date}</Text>
+						</View>;
+		}
 		return(
 			<View style={Styles.imageBackground}>
 				<View style={Styles.header}>
@@ -67,15 +89,7 @@ class ImagePage extends Component{
 					</TouchableOpacity>
 				</View>
 				<Image style={Styles.bigImage} source={{uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>
-				<View style={Styles.textContainer}>
-					<Text style={Styles.infoHeading}>Owner</Text>
-					<Text style={Styles.info}>{this.state.username}</Text>
-					<Text style={Styles.infoHeading}>Views</Text>
-					<Text style={Styles.info}>{this.state.views}</Text>
-					<Text style={Styles.infoHeading}>Taken On</Text>
-					<Text style={Styles.info}>{this.state.date}</Text>
-					
-				</View>
+					{info}
 			</View>
 		);
 	}
