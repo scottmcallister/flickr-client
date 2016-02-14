@@ -5,9 +5,12 @@
 var React = require('react-native');
 var {
   Component,
+  Image,
   View,
   Text,
 } = React;
+
+var Styles = require('./Styles');
 
 class SplashPage extends Component {
   componentWillMount() {
@@ -20,8 +23,10 @@ class SplashPage extends Component {
   }
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#246dd5', alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{color: 'white', fontSize: 32,}}>Flickr Client</Text>
+      <View style={Styles.splashBackground}>
+        <Image style={Styles.logo} source={require('./img/flickr.png')}/>
+        <Text style={Styles.splashMessage}>Flickr Client</Text>
+        
       </View>
     );
   }

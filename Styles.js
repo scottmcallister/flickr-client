@@ -7,6 +7,20 @@ import React, {
 } from 'react-native';
 
 var Styles = StyleSheet.create({
+  splashBackground: {
+    flex: 1, 
+    backgroundColor: '#333333', 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  splashMessage: {
+    color: '#ffffff', 
+    fontSize: 32
+  },
+  logo: {
+    width:70,
+    height:60
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -44,14 +58,32 @@ var Styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 5, 
     borderColor: '#CCC'
   },
   thumb: {
     width: 100,
     height: 100,
     borderRadius:5
+  },
+  imageBackground: {
+    flex: 1,
+    backgroundColor: '#ffffff'
+  },
+  imageContainer: {
+    flex:0.5,
+    alignItems: 'stretch'
+  },
+  imageBackButton: {
+    justifyContent: 'flex-start',
+    paddingLeft: 20,
+    color: '#ffffff'
+  },
+  bigImage:{
+    height:400,
+    justifyContent: 'center'
   }
+
 });
 
 module.exports = Styles;

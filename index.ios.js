@@ -16,9 +16,7 @@ var Styles = require('./Styles');
 
 var SplashPage = require('./SplashPage');
 var SearchPage = require('./SearchPage');
-//var Results = require('./Results');
-//var ImagePage = require('./ImagePage');
-
+var ImagePage = require('./ImagePage');
 
 class FlickrClient extends Component {
 
@@ -47,6 +45,13 @@ class FlickrClient extends Component {
       return (
         <SearchPage
           navigator={navigator} />
+      );
+    }
+    if (routeId === 'ImagePage') {
+      return (
+        <ImagePage
+          navigator={navigator}
+          image={route.image} />
       );
     }
     return this.noRoute(navigator);

@@ -50,11 +50,10 @@ var SORT_OPTIONS = {
 class SearchPage extends Component{
 	constructor(props) {
 		super(props);
-		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
 		this.state = {results: ds, sort: 'relevance'};
 	}
 	_searchFlickr(searchTerm){
-		console.log(this.state.sort);
 		var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3a84419781bb3f1a1505be834333bf48&text='+encodeURI(searchTerm)+'&per_page=30&format=json&sort='+this.state.sort;
 		fetch(url,{method: 'GET', headers:{'Accept': 'application/json', 'Content-Type': 'application/json'}})
 			.then((response) => response._bodyInit)
@@ -62,12 +61,24 @@ class SearchPage extends Component{
 				var responseJSON = JSON.parse(responseBody.substring(14,responseBody.length-1));
 				var photos = responseJSON.photos.photo;
 				var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-				var dataSource =  ds.cloneWithRows(photos);
-				this.setState({results: dataSource, sort: this.state.sort});
+				this.setState({results: ds.cloneWithRows(photos), sort: this.state.sort});
 			})
 			.catch((error) => {
 				console.warn(error);
 			});
+	}
+	_onClick(image){
+		this.props.navigator.push({id: 'ImagePage', image: image});
+	}
+	renderImage(image){
+		console.log(image);
+		return (
+			<View style={Styles.row}>
+				<TouchableOpacity onPress={this._onClick.bind(this, image)}>
+					<Image style={Styles.thumb} source={{uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>
+				</TouchableOpacity>
+			</View>
+		);
 	}
 	render(){
 		return (
@@ -82,17 +93,17 @@ class SearchPage extends Component{
 				</View>
 
 				<ListView
+					ref={'results'}
 					dataSource={this.state.results}
 					renderRow={(image) => 
-						<View style={Styles.row}>
-							<Image style={Styles.thumb} source={{uri: 'https://farm'+image.farm+'.staticflickr.com/'+image.server+'/'+image.id+'_'+image.secret+'.jpg'}}/>
-						</View>
+						this.renderImage(image)
 					}
+					pageSize={30}
 					contentContainerStyle={Styles.list}
 				/>
 				<PickerIOS
-					selectedValue={this.state.order}
-					onValueChange={(newOrder) => this.setState({results: this.state.results, order: newOrder})}
+					selectedValue={this.state.sort}
+					onValueChange={(newOrder) => this.setState({results: this.state.results, sort: newOrder})}
 					style={{backgroundColor:'#EAF8FD', borderTopColor: '#05A5D1', borderTopWidth: 2}}>
 					{Object.keys(SORT_OPTIONS).map((sortOption) => (
 						<PickerItemIOS
