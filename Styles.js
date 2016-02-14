@@ -82,8 +82,29 @@ var Styles = StyleSheet.create({
   bigImage:{
     height:400,
     justifyContent: 'center'
+  },
+  textContainer: {
+    backgroundColor: '#EAF8FD',
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopColor: '#05A5D1', 
+    borderTopWidth: 2
+  },
+  infoHeading: {
+    fontWeight: 'bold',
+    fontSize: 25
+  },
+  info: {
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginBottom: 5
+  },
+  picker: {
+    backgroundColor:'#EAF8FD', 
+    borderTopColor: '#05A5D1', 
+    borderTopWidth: 2
   }
-
 });
 
 module.exports = Styles;

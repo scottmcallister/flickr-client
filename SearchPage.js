@@ -71,7 +71,6 @@ class SearchPage extends Component{
 		this.props.navigator.push({id: 'ImagePage', image: image});
 	}
 	renderImage(image){
-		console.log(image);
 		return (
 			<View style={Styles.row}>
 				<TouchableOpacity onPress={this._onClick.bind(this, image)}>
@@ -104,7 +103,7 @@ class SearchPage extends Component{
 				<PickerIOS
 					selectedValue={this.state.sort}
 					onValueChange={(newOrder) => this.setState({results: this.state.results, sort: newOrder})}
-					style={{backgroundColor:'#EAF8FD', borderTopColor: '#05A5D1', borderTopWidth: 2}}>
+					style={Styles.picker}>
 					{Object.keys(SORT_OPTIONS).map((sortOption) => (
 						<PickerItemIOS
 							key={sortOption}
