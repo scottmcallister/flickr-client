@@ -6,3 +6,7 @@ date posted, date taken, or interestingness. To run the app, you can clone this 
 ```
 $ open /path/to/flickr-client/ios/FlickrClient.xcodeproj
 ```
+
+![alt text](/screenshots/Splash.png "Splash Page")
+![alt text](/screenshots/Grid.png "Search Result Page")
+![alt text](/screenshots/Info.png "Photo Info Page")
