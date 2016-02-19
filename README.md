@@ -7,4 +7,4 @@ date posted, date taken, or interestingness. To run the app, you can clone this 
 $ open /path/to/flickr-client/ios/FlickrClient.xcodeproj
 ```
 
-![alt text](/screenshots/Splash.png =200x400 "Splash Page") ![alt text](/screenshots/Grid.png =200x400 "Search Result Page") ![alt text](/screenshots/Info.png =200x400 "Photo Info Page")
+<img src="/screenshots/Splash.png" height="200px" width="400px" alt="Splash Page"> <img src="/screenshots/Grid.png" height="200px" width="400px" alt="Search Page"> <img src="/screenshots/Info.png" height="200px" width="400px" alt="Info Page">
